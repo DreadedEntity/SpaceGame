@@ -4,48 +4,32 @@ import java.awt.Color;
 import Core.RectDouble;
 
 public class Player extends Entity {
-	private double x;
-	private double y;
-	private double health;
-	private double speed;
-	private double forceX;
-	private double forceY;
-	public Color color;
-	public RectDouble rect;
 	
 	public Player() {
-		x = 10;
-		y = 200;
-		health = 100;
 		speed = 10;
 		forceX = 1;
 		forceY = 1;
-		//rect.setSize((double)20, (double)20);
+		rect = new RectDouble(10, 200, 20, 20, Color.RED);
 	}
 	
 	public Shot shoot() {
-		Shot shot = new Shot((int)x,(int)(y + 10));
+		Shot shot = new Shot((int)rect.getX(),(int)(rect.getY() + 10));
 		return shot;
 	}
 	
-	public double getX() { return x; }
-	public double getY() { return y; }
-	
-	public void setX(double i) { x = i; }
-	public void setY(double i) { y = i; }
-	
 	public void moveX(boolean b) {
 		if (b)
-			x += forceX * speed;
+			rect.setX(rect.getX() + (forceX * speed));
 		else
-			x -= forceX * speed;
+			rect.setX(rect.getX() - (forceX * speed));
+		System.out.println(rect.getX() + (forceX * speed));
 		
 	}
 	public void moveY(boolean b) {
 		if (b)
-			y += forceY * speed;
+			rect.setY(rect.getY() + forceY * speed);
 		else
-			y -= forceY * speed;
+			rect.setY(rect.getY() - forceY * speed);
 	}
 	
 	public double getHealth() { return health; }

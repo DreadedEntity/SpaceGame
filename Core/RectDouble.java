@@ -15,6 +15,13 @@ public class RectDouble extends Rectangle {
 		width = height = 20;
 		color = Color.WHITE;
 	}
+	public RectDouble(double x, double y, double width, double height, Color color) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.color = color;
+	}
 	
 	public void setSize(double width, double height) {
 		this.width = width;

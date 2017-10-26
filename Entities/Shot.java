@@ -1,19 +1,17 @@
 package Entities;
+
+import java.awt.Color;
+
+import Core.RectDouble;
+
 public class Shot extends Entity {
-	private double x;
-	private double y;
-	private double speed;
 	
 	public Shot(double shipX, double shipY) {
-		x = shipX;
-		y = shipY;
+		rect = new RectDouble(shipX, shipY, 5, 5, Color.MAGENTA);
 		speed = 15;
 	}
 	
 	public void animate() {
-		x += speed;
+		rect.setX(rect.getX() + speed); 
 	}
-	
-	public double getX() { return x; }
-	public double getY() { return y; }
 }

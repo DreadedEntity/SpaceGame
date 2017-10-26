@@ -46,23 +46,8 @@ public class Game extends JPanel {
 		if (keys[87]) {	player.moveY(false); }
 		if (keys[65]) { player.moveX(false); }
 		if (keys[83]) { player.moveY(true); }
-		if (keys[68]) {
-			if ((player.getX() / scaleX) - (20 * scaleX) > this.getWidth())
-				player.setX(this.getWidth() - (20 * scaleX));
-			else
-				player.moveX(true);
-		}
+		if (keys[68]) {	player.moveX(true);	}
 		if (keys[32]) { shots.add(player.shoot()); }
-		
-		
-		//TO DO: FIX
-		if (player.getX() < 0)
-			player.setX(0);
-		if (player.getY() < 0)
-			player.setY(0);
-		if ((player.getY() / scaleY) - (20 * scaleY) > this.getHeight())
-			player.setY(this.getHeight() - (20 * scaleY));
-		System.out.println(player.getY() + "\t" + this.getHeight());
 	}
 	
 	public Dimension getPreferredSize() {
@@ -84,30 +69,28 @@ public class Game extends JPanel {
 			g.fillRect((int)(star.getX() * scaleX), (int)(star.getY() * scaleY), Math.max(1, (int)(1 * scaleX)), Math.max(1, (int)(1 * scaleY)));
 		}
 		
-		g.setColor(Color.MAGENTA);
+		//drawShots
 		for (int i = 0; i < shots.size(); i++) {
-			Shot shot = shots.get(i);
-			g.fillRect((int)(shot.getX() * scaleX), (int)(shot.getY() * scaleY), Math.max(1, (int)(5 * scaleX)), Math.max(1, (int)(5 * scaleY)));
+			drawEntity(shots.get(i), g);
 		}
 		
 		//draw Enemies
 		for (int i = 0; i < enemies.size(); i++) {
-			g.setColor(enemies.get(i).color);
-//			g.fillRect(
-//				(int)(enemies.get(i).getX() * scaleX),
-//				(int)(enemies.get(i).getY() * scaleY),
-//				(int)(enemies.get(i).rect.getWidth() * scaleX),
-//				(int)(enemeis.get(i).rect.getHeight() * scaleY)
-//			);
+			drawEntity(shots.get(i), g);
 		}
 		
 		//draw Player
-		g.setColor(player.color);
+		drawEntity(player, g);
+	}
+	
+	private void drawEntity(Entity e, Graphics g) {
+		RectDouble rect = e.getRect();
+		g.setColor(rect.getColor());
 		g.fillRect(
-				(int)(player.getX() * scaleX),
-				(int)(player.getY() * scaleY),
-				(int)(player.rect.getWidth() * scaleX),
-				(int)(player.rect.getHeight() * scaleY)
+				(int)(rect.getX() * scaleX),
+				(int)(rect.getY() * scaleY),
+				(int)(rect.getWidth() * scaleX),
+				(int)(rect.getHeight() * scaleY)
 		);
 	}
 }
