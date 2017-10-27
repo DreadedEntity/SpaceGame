@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 	
 	static boolean[] playerKeys = new boolean[155];
@@ -61,6 +62,8 @@ public class MainFrame extends JFrame {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
+			Game.frame++;
 		}
 	}	
 }

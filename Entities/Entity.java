@@ -15,4 +15,8 @@ public class Entity {
 	}
 	
 	public RectDouble getRect() { return this.rect; }
+	
+	public void animate() {
+		this.rect.setX(this.rect.getX() + (forceX * speed));
+	};
 }

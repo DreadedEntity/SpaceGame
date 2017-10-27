@@ -3,6 +3,7 @@ package Core;
 import java.awt.Color;
 import java.awt.Rectangle;
 
+@SuppressWarnings("serial")
 public class RectDouble extends Rectangle {
 	private double x;
 	private double y;

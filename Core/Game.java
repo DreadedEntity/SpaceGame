@@ -11,12 +11,12 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel {
+	public static ArrayList<Star> stars = new ArrayList<Star>(Collections.synchronizedCollection(new ArrayList<Star>()));
+	public static ArrayList<Shot> shots = new ArrayList<Shot>(Collections.synchronizedCollection(new ArrayList<Shot>()));
+	public static ArrayList<Enemy> enemies = new ArrayList<Enemy>(Collections.synchronizedCollection(new ArrayList<Enemy>()));
+	public static Player player = new Player();
 	
-//	private ArrayList<Star> stars = new ArrayList<Star>();
-	private static ArrayList<Star> stars = new ArrayList<Star>(Collections.synchronizedCollection(new ArrayList<Star>()));
-	private static ArrayList<Shot> shots = new ArrayList<Shot>(Collections.synchronizedCollection(new ArrayList<Shot>()));
-	private static ArrayList<Enemy> enemies = new ArrayList<Enemy>(Collections.synchronizedCollection(new ArrayList<Enemy>()));
-	Player player = new Player();
+	public static int frame = 0;
 	
 	public double scaleX = 1;
 	public double scaleY = 1;
@@ -26,6 +26,9 @@ public class Game extends JPanel {
 		for (int i = 0; i < 200; i++) {
 			stars.add(new Star(this));
 		}
+		
+		for (int i = 0; i < 5; i++)
+			enemies.add(new Enemy(this));
 	}
 	
 	public void physicsTick() {
@@ -38,7 +41,22 @@ public class Game extends JPanel {
 			}			
 		}
 		for (int i = 0; i < shots.size(); i++) {
-			shots.get(i).animate();
+			Shot shot = shots.get(i);
+			if (shot.getRect().getX() > this.getPreferredSize().getWidth()) {
+				shots.remove(i);
+				shots.trimToSize();
+			}
+			else
+				shot.animate();
+		}
+		for (int i = 0; i < enemies.size(); i++) {
+			if (enemies.get(i).getRect().getX() < 0) {
+				enemies.remove(i);
+				enemies.add(new Enemy(this));
+				enemies.trimToSize();
+			}
+			
+			enemies.get(i).animate();
 		}
 	}
 	
@@ -47,7 +65,11 @@ public class Game extends JPanel {
 		if (keys[65]) { player.moveX(false); }
 		if (keys[83]) { player.moveY(true); }
 		if (keys[68]) {	player.moveX(true);	}
-		if (keys[32]) { shots.add(player.shoot()); }
+		if (keys[32]) {
+			Shot shot = player.shoot();
+			if (shot != null)
+				shots.add(shot);
+		}
 	}
 	
 	public Dimension getPreferredSize() {
@@ -60,27 +82,26 @@ public class Game extends JPanel {
 		scaleX = this.getSize().getWidth() / this.getPreferredSize().getWidth();
 		scaleY = this.getSize().getHeight() / this.getPreferredSize().getHeight();
 		
+		//draw background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		drawBackground(g);
 		
-		g.setColor(Color.WHITE);
-		for (int i = 0; i < stars.size(); i++) {
-			Star star = stars.get(i);
-			g.fillRect((int)(star.getX() * scaleX), (int)(star.getY() * scaleY), Math.max(1, (int)(1 * scaleX)), Math.max(1, (int)(1 * scaleY)));
-		}
-		
-		//drawShots
+		//draw Shots
 		for (int i = 0; i < shots.size(); i++) {
 			drawEntity(shots.get(i), g);
 		}
 		
 		//draw Enemies
 		for (int i = 0; i < enemies.size(); i++) {
-			drawEntity(shots.get(i), g);
+			drawEntity(enemies.get(i), g);
 		}
 		
 		//draw Player
 		drawEntity(player, g);
+		
+		g.setColor(Color.YELLOW);
+		g.drawString(Game.frame + "", 1, 10);
 	}
 	
 	private void drawEntity(Entity e, Graphics g) {
@@ -92,5 +113,21 @@ public class Game extends JPanel {
 				(int)(rect.getWidth() * scaleX),
 				(int)(rect.getHeight() * scaleY)
 		);
+	}
+	private void drawBackground(Graphics g) {
+		for (int i = 0; i < stars.size(); i++) {
+			Color c = new Color(255,255,255, stars.get(i).getAlpha());
+			g.setColor(c);
+			
+			Star star = stars.get(i);
+			g.fillRect(
+				(int)(star.getX() * scaleX),
+				(int)(star.getY() * scaleY),
+				Math.max(1, (int)(1 * scaleX)),
+				Math.max(1, (int)(1 * scaleY))
+			);
+			
+			star.twinkle();
+		}
 	}
 }
