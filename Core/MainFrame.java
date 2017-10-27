@@ -36,6 +36,11 @@ public class MainFrame extends JFrame {
 //				System.out.println(key.getKeyCode());
 //				System.out.println(key.getKeyChar());
 				playerKeys[key.getKeyCode()] = true;
+				if (key.getKeyChar() == 'c') {
+					for (int i = 0; i < Game.enemies.size(); i++) {
+						Game.enemies.get(i).setSpeed(0);
+					}
+				}
 			}
 
 			@Override
@@ -54,8 +59,11 @@ public class MainFrame extends JFrame {
 		
 		while (true) {
 			p.physicsTick();
+			p.handleCollisions(p.collisionCheck());
 			p.movePlayer(playerKeys);
 			gameScreen.repaint();
+			
+			
 			
 			try {
 				TimeUnit.MILLISECONDS.sleep(10);

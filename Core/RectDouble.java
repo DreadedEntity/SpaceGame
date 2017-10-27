@@ -24,6 +24,14 @@ public class RectDouble extends Rectangle {
 		this.color = color;
 	}
 	
+	public boolean collidesWith(RectDouble rect) {
+		RectDouble thisRect = this;
+		RectDouble testRect = rect;
+		if (thisRect.getX() + thisRect.getWidth() > testRect.getX() && thisRect.getX() < testRect.getX() + testRect.getWidth() && thisRect.getY() + thisRect.getHeight() > testRect.getY() && thisRect.getY() < testRect.getY() + testRect.getHeight())
+				return true;
+		return false;
+	}
+	
 	public void setSize(double width, double height) {
 		this.width = width;
 		this.height = height;

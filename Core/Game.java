@@ -59,6 +59,37 @@ public class Game extends JPanel {
 			enemies.get(i).animate();
 		}
 	}
+	public ArrayList<Entity> collisionCheck() {
+		ArrayList<Entity> collisions = new ArrayList<Entity>();
+		
+		for (int i = 0; i < Game.enemies.size(); i++) {
+			if (Game.enemies.get(i).collidesWith(Game.player))
+				collisions.add(Game.enemies.get(i));
+			
+		}
+		if (Game.shots.size() > 0)
+			for (int i = 0; i < Game.enemies.size(); i++) {
+				if (Game.enemies.get(i).collidesWith(Game.player))
+					collisions.add(Game.enemies.get(i));
+				for (int j = 0; j < Game.shots.size(); j++) {
+					if (Game.enemies.get(i).collidesWith(Game.shots.get(j))) {
+						if (Game.shots.get(j).getForceX() > 0) {
+							collisions.add(Game.enemies.get(i));
+							collisions.add(Game.shots.get(j));
+							Game.enemies.add(new Enemy(this));
+							Game.enemies.add(new Enemy(this));
+						}
+					}
+				}
+			}
+		return collisions;
+	}
+	
+	public void handleCollisions(ArrayList<Entity> list) {
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).kill();
+		}
+	}
 	
 	public void movePlayer(boolean[] keys) {
 		if (keys[87]) {	player.moveY(false); }
@@ -113,6 +144,8 @@ public class Game extends JPanel {
 				(int)(rect.getWidth() * scaleX),
 				(int)(rect.getHeight() * scaleY)
 		);
+		
+//		g.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
 	}
 	private void drawBackground(Graphics g) {
 		for (int i = 0; i < stars.size(); i++) {

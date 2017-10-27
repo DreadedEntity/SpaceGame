@@ -28,8 +28,6 @@ public class Player extends Entity {
 			rect.setX(rect.getX() + (forceX * speed));
 		else
 			rect.setX(rect.getX() - (forceX * speed));
-		System.out.println(rect.getX());
-		
 	}
 	public void moveY(boolean b) {
 		if (b)

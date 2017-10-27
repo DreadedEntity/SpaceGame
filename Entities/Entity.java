@@ -14,9 +14,20 @@ public class Entity {
 		health = speed = forceX = forceY = 0;
 	}
 	
+	public void kill() {
+	}
+	
 	public RectDouble getRect() { return this.rect; }
 	
 	public void animate() {
 		this.rect.setX(this.rect.getX() + (forceX * speed));
-	};
+	}
+	
+	public boolean collidesWith(Entity e) {
+		return this.getRect().collidesWith(e.getRect());
+	}
+	
+	public void setSpeed(int i) {
+		this.speed = 0;
+	}
 }

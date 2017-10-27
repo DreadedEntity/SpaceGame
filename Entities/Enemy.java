@@ -17,12 +17,16 @@ public class Enemy extends Entity {
 		forceX = 1;
 	}
 	
+	public void kill() {
+		Game.enemies.remove(this);
+	}
+	
 	@Override
 	public void animate() {
 		super.animate();
 		Random r = new Random();
 		if (r.nextInt(100) > 98) {
-			Game.shots.add(new Shot(this.getRect().getX(), this.getRect().getY(), -1));
+			Game.shots.add(new Shot(this.getRect().getX() - 5, this.getRect().getY(), -1));
 		}
 	}
 }
