@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -14,6 +13,7 @@ public class Game extends JPanel {
 	public static ArrayList<Star> stars = new ArrayList<Star>(Collections.synchronizedCollection(new ArrayList<Star>()));
 	public static ArrayList<Shot> shots = new ArrayList<Shot>(Collections.synchronizedCollection(new ArrayList<Shot>()));
 	public static ArrayList<Enemy> enemies = new ArrayList<Enemy>(Collections.synchronizedCollection(new ArrayList<Enemy>()));
+//	public static ArrayList<Sine> sines = new ArrayList<Sine>(Collections.synchronizedCollection(new ArrayList<Sine>()));
 	public static Player player = new Player();
 	
 	public static int frame = 0;
@@ -49,6 +49,17 @@ public class Game extends JPanel {
 			else
 				shot.animate();
 		}
+		
+//		for (int i = 0; i < shots.size(); i++) {
+//			Shot shot = shots.get(i);
+//			if (shot.getRect().getX() > this.getPreferredSize().getWidth()) {
+//				shots.remove(i);
+//				shots.trimToSize();
+//			}
+//			else
+//				shot.animate();
+//		}
+		
 		for (int i = 0; i < enemies.size(); i++) {
 			if (enemies.get(i).getRect().getX() < 0) {
 				enemies.remove(i);
@@ -100,6 +111,11 @@ public class Game extends JPanel {
 			Shot shot = player.shoot();
 			if (shot != null)
 				shots.add(shot);
+		}
+		if (keys[86]) {
+			Sine shot = player.shoot1();
+			if (shot != null)
+				shots.add((Shot)shot);
 		}
 	}
 	

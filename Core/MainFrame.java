@@ -58,9 +58,9 @@ public class MainFrame extends JFrame {
 		});
 		
 		while (true) {
+			p.movePlayer(playerKeys);
 			p.physicsTick();
 			p.handleCollisions(p.collisionCheck());
-			p.movePlayer(playerKeys);
 			gameScreen.repaint();
 			
 			
