@@ -30,6 +30,14 @@ public class Player extends Entity {
 		}
 		return shot;
 	}
+	public Mine shoot2() {
+		Mine shot = null;
+		if (Game.frame > frameFiredLast + 10) {
+			shot = new Mine(rect.getX(),rect.getY() + 10, 1);
+			frameFiredLast = Game.frame;
+		}
+		return shot;
+	}
 	
 	public void moveX(boolean b) {
 		if (b)

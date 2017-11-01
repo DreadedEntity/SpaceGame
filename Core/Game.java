@@ -117,6 +117,11 @@ public class Game extends JPanel {
 			if (shot != null)
 				shots.add((Shot)shot);
 		}
+		if (keys[88]) {
+			Mine shot = player.shoot2();
+			if (shot != null)
+				shots.add((Shot)shot);
+		}
 	}
 	
 	public Dimension getPreferredSize() {

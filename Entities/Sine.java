@@ -2,12 +2,11 @@ package Entities;
 
 import java.awt.Color;
 
-import Core.Game;
 import Core.RectDouble;
 
 public class Sine extends Shot {
-	private int startingFrame;
 	private double startingY;
+	private double startingX;
 	
 	public Sine(double shipX, double shipY, double forceX) {
 		super();
@@ -15,21 +14,12 @@ public class Sine extends Shot {
 		this.speed = 6;
 		this.forceX = forceX;
 		this.startingY = shipY;
-		this.startingFrame = Game.frame;
-		System.out.println("Sine created");
-	}
-	
-	public void kill() {
-		Game.shots.remove(this);
-	}
-	
-	public double getForceX() {
-		return this.forceX;
+		this.startingX = shipX + 20;
 	}
 	
 	@Override
 	public void animate() {
-		this.getRect().setLocation(this.getRect().getX() + (forceX * speed) / 3, startingY + (Math.sin(Math.toRadians((Game.frame - startingFrame) * 5))) * this.speed * 10);
-		System.out.println(Game.frame - startingFrame);
+//		this.getRect().setLocation(this.getRect().getX() + (forceX * speed) / 3, startingY + (Math.sin(Math.toRadians((Game.frame - startingFrame) * 5))) * this.speed * 10);
+		this.getRect().setLocation(this.getRect().getX() + (forceX * speed) / 3, startingY + (Math.sin(Math.toRadians((this.getRect().getX() - this.startingX) * 3))) * this.speed * 10);
 	}
 }
