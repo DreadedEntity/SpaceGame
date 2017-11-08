@@ -11,9 +11,10 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 	
-	static boolean[] playerKeys = new boolean[193];
+	public static boolean[] playerKeys = new boolean[193];
 	public static boolean toggle = false;
 	public static boolean toggleHeld = false;
+	public static long fps = 0;
 
 	public static void main(String[] args) {
 		MainFrame gameScreen = new MainFrame();
@@ -81,22 +82,31 @@ public class MainFrame extends JFrame {
 			
 		});
 		
+		double fps60 = 16.66667;
+		double frameWait = 10;
 		while (!playerKeys[27]) {
+			fps = System.nanoTime();
+			
 			p.movePlayer(playerKeys);
 			p.physicsTick();
 			p.handleCollisions(p.collisionCheck());
 			gameScreen.repaint();
 			
 			
-			
+			frameWait = Math.min(10, System.nanoTime() - MainFrame.fps);
 			try {
-				TimeUnit.MILLISECONDS.sleep(10);
+				TimeUnit.MILLISECONDS.sleep((int)frameWait);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			
+			System.out.println("FPS: " + (60 * fps60 / ((System.nanoTime() - fps) / 1000000)));
+			
 			Game.frame++;
+			MainFrame.fps = System.currentTimeMillis();
+			
 		}
-		gameScreen.getDefaultCloseOperation();
+		System.out.println("Thanks for playing");
+		System.exit(0);
 	}	
 }

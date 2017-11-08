@@ -153,7 +153,9 @@ public class Game extends JPanel {
 		drawEntity(player, g);
 		
 		g.setColor(Color.YELLOW);
-		g.drawString(Game.frame + "", 1, 10);
+		g.drawString("Frame: " + Game.frame, 1, 10);
+//		double fps = (MainFrame.fps + 10) - System.currentTimeMillis();
+//		g.drawString("FPS: " + (60 * ((100/6) / fps)), 1, 22);
 	}
 	
 	private void drawEntity(Entity e, Graphics g) {
