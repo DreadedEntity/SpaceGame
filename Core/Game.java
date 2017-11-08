@@ -42,7 +42,7 @@ public class Game extends JPanel {
 		}
 		for (int i = 0; i < shots.size(); i++) {
 			Shot shot = shots.get(i);
-			if (shot.getRect().getX() > this.getPreferredSize().getWidth()) {
+			if (shot.getRect().getX() > this.getPreferredSize().getWidth() || shot.getRect().getX() < 0 - shot.getRect().getWidth()) {
 				shots.remove(i);
 				shots.trimToSize();
 			}
@@ -50,18 +50,8 @@ public class Game extends JPanel {
 				shot.animate();
 		}
 		
-//		for (int i = 0; i < shots.size(); i++) {
-//			Shot shot = shots.get(i);
-//			if (shot.getRect().getX() > this.getPreferredSize().getWidth()) {
-//				shots.remove(i);
-//				shots.trimToSize();
-//			}
-//			else
-//				shot.animate();
-//		}
-		
 		for (int i = 0; i < enemies.size(); i++) {
-			if (enemies.get(i).getRect().getX() < 0) {
+			if (enemies.get(i).getRect().getX() < 0 - enemies.get(i).getRect().getWidth()) {
 				enemies.remove(i);
 				enemies.add(new Enemy(this));
 				enemies.trimToSize();

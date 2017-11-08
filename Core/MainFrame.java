@@ -84,6 +84,8 @@ public class MainFrame extends JFrame {
 		
 		double fps60 = 16.66667;
 		double frameWait = 10;
+		int end = 0;
+		
 		while (!playerKeys[27]) {
 			fps = System.nanoTime();
 			
@@ -101,12 +103,22 @@ public class MainFrame extends JFrame {
 			}
 			
 			System.out.println("FPS: " + (60 * fps60 / ((System.nanoTime() - fps) / 1000000)));
+			if (60 * fps60 / ((System.nanoTime() - fps) / 1000000) < 30)
+				if (++end == 5)
+					break;
 			
 			Game.frame++;
 			MainFrame.fps = System.currentTimeMillis();
 			
 		}
+		
 		System.out.println("Thanks for playing");
+		
+		Game.enemies.trimToSize();
+		Game.shots.trimToSize();
+		Game.stars.trimToSize();
+		
+		System.out.println("Total Objects: " + Game.enemies.size() + Game.shots.size() + Game.stars.size() + 1);
 		System.exit(0);
 	}	
 }
