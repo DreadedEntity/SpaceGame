@@ -119,6 +119,6 @@ public class MainFrame extends JFrame {
 		Game.stars.trimToSize();
 		
 		System.out.println("Total Objects: " + Game.enemies.size() + Game.shots.size() + Game.stars.size() + 1);
-		System.exit(0);
+		//System.exit(0);
 	}	
 }
