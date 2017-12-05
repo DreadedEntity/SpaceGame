@@ -1,0 +1,16 @@
+Ideas:
+
+AI Storyteller
+Procedurally generated universe and events
+	Starmap
+Modular ship design
+	Ship classes
+		starfighter
+		frigate
+		destroyer
+		cruiser
+		battleship
+		capital ship
+	Upgrades for modules
+Randomly generated enemies
+	Could be upgraded with a neural network???

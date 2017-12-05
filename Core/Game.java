@@ -3,8 +3,11 @@ import Entities.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -13,7 +16,6 @@ public class Game extends JPanel {
 	public static ArrayList<Star> stars = new ArrayList<Star>(Collections.synchronizedCollection(new ArrayList<Star>()));
 	public static ArrayList<Shot> shots = new ArrayList<Shot>(Collections.synchronizedCollection(new ArrayList<Shot>()));
 	public static ArrayList<Enemy> enemies = new ArrayList<Enemy>(Collections.synchronizedCollection(new ArrayList<Enemy>()));
-//	public static ArrayList<Sine> sines = new ArrayList<Sine>(Collections.synchronizedCollection(new ArrayList<Sine>()));
 	public static Player player = new Player();
 	
 	public static int frame = 0;
@@ -121,9 +123,22 @@ public class Game extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		Random r = new Random((long)1);
+		
 		scaleX = this.getSize().getWidth() / this.getPreferredSize().getWidth();
 		scaleY = this.getSize().getHeight() / this.getPreferredSize().getHeight();
 		
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, (int)(getPreferredSize().getWidth()*scaleX), (int)(getPreferredSize().getHeight()*scaleY));
+		g.setColor(Color.WHITE);
+		for (int i = 0; i < getPreferredSize().getHeight(); i++) {
+			for (int j = 0; j < getPreferredSize().getWidth(); j++) {
+				if (r.nextInt(100) > 90)
+					g.fillRect((int)(j*scaleX), (int)(i*scaleY), (int)Math.max(1,(1*scaleX)), (int)Math.max(1, (1*scaleY)));
+			}
+		}
+		
+		/*
 		//draw background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -144,8 +159,8 @@ public class Game extends JPanel {
 		
 		g.setColor(Color.YELLOW);
 		g.drawString("Frame: " + Game.frame, 1, 10);
-//		double fps = (MainFrame.fps + 10) - System.currentTimeMillis();
 //		g.drawString("FPS: " + (60 * ((100/6) / fps)), 1, 22);
+		*/
 	}
 	
 	private void drawEntity(Entity e, Graphics g) {
@@ -157,8 +172,6 @@ public class Game extends JPanel {
 				(int)(rect.getWidth() * scaleX),
 				(int)(rect.getHeight() * scaleY)
 		);
-		
-//		g.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
 	}
 	private void drawBackground(Graphics g) {
 		for (int i = 0; i < stars.size(); i++) {
